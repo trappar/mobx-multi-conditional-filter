@@ -2,7 +2,7 @@ import Condition from './Condition';
 
 export default function conditionTypeFactory(conditionClass = Condition) {
   const generateCondition = (defaultLabel, callback) => ({ label = defaultLabel, ...rest }) => new conditionClass({
-    ...rest, label, callback,
+    label, callback, ...rest
   });
 
   return {
