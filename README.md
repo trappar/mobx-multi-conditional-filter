@@ -1,4 +1,4 @@
-# PropsProvider [![Build Status](https://travis-ci.org/trappar/mobx-multi-conditional-filter.svg?branch=master)](https://travis-ci.org/trappar/mobx-multi-conditional-filter)
+# MobxMultiConditionalFilter [![Build Status](https://travis-ci.org/trappar/mobx-multi-conditional-filter.svg?branch=master)](https://travis-ci.org/trappar/mobx-multi-conditional-filter)
 React component for filtering an array of items based on an arbitrary hierarchical set of conditions
 
 ## Introduction

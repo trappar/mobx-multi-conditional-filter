@@ -2,5 +2,8 @@ src
 .idea
 .babelrc
 .eslintrc
+.eslintignore
+.npmignore
 .travis.yml
+README.md
 yarn.lock
