@@ -21,8 +21,14 @@ test('Renders', () => {
       label: '2',
       placeholder: 'value',
       callback: (v, e) => v === 'b',
-      processOnEmpty: true,
+      callOnEmptyExpected: true,
       render: false,
+    }),
+    new Condition({
+      label: '3',
+      callback: (v, e) => v === e,
+      defaultExpected: 'asdf',
+      processExpected: expected => 'a',
     })
   ];
 
@@ -34,8 +40,11 @@ test('Renders', () => {
 
   mounted.find('a').simulate('click');
   mounted.find('input').simulate('change', { target: { value: 'a' } });
-  expect(mounted.text()).toBe('+X12"a"');
+  expect(mounted.text()).toBe('+X123"a"');
 
   mounted.find('select').simulate('change', { target: { value: config[1].key } });
-  expect(mounted.text()).toBe('+X12"b"');
+  expect(mounted.text()).toBe('+X123"b"');
+
+  mounted.find('select').simulate('change', { target: { value: config[2].key } });
+  expect(mounted.text()).toBe('+X123"a"');
 });

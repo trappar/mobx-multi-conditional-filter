@@ -7,8 +7,9 @@ export default class Condition extends BaseConfig {
   constructor(options) {
     const {
       placeholder,
-      callback = () => true,
-      processOnEmpty = false,
+      processExpected,
+      callback,
+      callOnEmptyExpected = false,
       defaultExpected = '',
       render,
     } = options;
@@ -16,14 +17,19 @@ export default class Condition extends BaseConfig {
     super(options);
 
     this.placeholder = placeholder;
+    this.processExpected = processExpected;
     this.callback = callback;
-    this.processOnEmpty = processOnEmpty;
+    this.callOnEmptyExpected = callOnEmptyExpected;
     this.defaultExpected = defaultExpected;
     this.render = render === undefined ? this.constructor.defaultRender : render;
   }
 
   apply(value, expected) {
-    const selectedValue = super.apply(value);
-    return (expected || this.processOnEmpty) ? this.callback(selectedValue, expected) : true;
+    const processedValue = super.apply(value);
+    const processedExpected = this.processExpected ? this.processExpected(expected) : expected;
+
+    return (expected || this.callOnEmptyExpected)
+      ? this.callback && this.callback(processedValue, processedExpected)
+      : true;
   }
 }
