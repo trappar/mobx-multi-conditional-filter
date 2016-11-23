@@ -23,11 +23,13 @@ export default class MultiConditionalFilter extends Component {
     selectClassName: PropTypes.string,
     removeComponent: PropsProvider.PropType,
     removeClassName: PropTypes.string,
+    removeAtEnd: PropTypes.bool,
     nbspBetweenElements: PropTypes.bool,
     children: PropsProvider.PropType,
   };
   static defaultProps = {
-    nbspBetweenElements: true
+    nbspBetweenElements: true,
+    removeAtEnd: false,
   };
 
   @observable chains;
@@ -56,32 +58,43 @@ export default class MultiConditionalFilter extends Component {
     );
   }
 
-  render() {
-    const { removeComponent, removeClassName, ...restProps } = this.props;
+  createFilter = (chain, i) => {
+    const { removeComponent, removeClassName, removeAtEnd, nbspBetweenElements, ...restProps } = this.props;
     delete restProps.items;
     delete restProps.config;
 
+    const remove = (
+      <PropsProvider onClick={this.handleRemoveChain(chain)}>
+        {
+          removeComponent ||
+          (({ onClick }) => (
+            <button className={removeClassName} onClick={onClick}>
+              X
+            </button>
+          ))
+        }
+      </PropsProvider>
+    );
+    const conditionChain = (
+      <ConditionChain
+        chain={chain}
+        {...restProps}
+      />
+    );
+
+    return (
+      <div key={i}>
+        {removeAtEnd ? conditionChain : remove}
+        {nbspBetweenElements && '\u00A0'}
+        {removeAtEnd ? remove : conditionChain}
+      </div>
+    )
+  };
+
+  render() {
     return (
       <PropsProvider
-        filters={this.chains.map((chain, i) => (
-          <div key={i}>
-            <PropsProvider onClick={this.handleRemoveChain(chain)}>
-              {
-                removeComponent ||
-                (({ onClick }) => (
-                  <button className={removeClassName} onClick={onClick}>
-                    X
-                  </button>
-                ))
-              }
-            </PropsProvider>
-            {this.props.nbspBetweenElements && '\u00A0'}
-            <ConditionChain
-              chain={chain}
-              {...restProps}
-            />
-          </div>
-        ))}
+        filters={this.chains.map(this.createFilter)}
         addFilter={this.handleAddChain}
         filteredItems={this.filteredItems}
       >
