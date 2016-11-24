@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Condition from '../config/Condition';
 import Selection from '../config/Selection';
 import ConditionChain from '../component/ConditionChain';
-import { observer } from 'mobx-react';
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { observable, computed } from 'mobx';
 import createSelectionChain from '../stores/createSelectionChain';
 import PropsProvider from 'props-provider';
@@ -16,7 +16,7 @@ export default class MultiConditionalFilter extends Component {
         PropTypes.instanceOf(Selection)
       ])
     ).isRequired,
-    items: PropTypes.array.isRequired,
+    items: MobxPropTypes.arrayOrObservableArray.isRequired,
     labelComponent: PropsProvider.PropType,
     labelClassName: PropTypes.string,
     selectComponent: PropsProvider.PropType,
