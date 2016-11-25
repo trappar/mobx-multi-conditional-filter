@@ -59,7 +59,7 @@ export default class MultiConditionalFilter extends Component {
   }
 
   createFilter = (chain, i) => {
-    const { removeComponent, removeClassName, removeAtEnd, nbspBetweenElements, ...restProps } = this.props;
+    const { removeComponent, removeClassName, removeAtEnd, ...restProps } = this.props;
     delete restProps.items;
     delete restProps.config;
 
@@ -85,7 +85,7 @@ export default class MultiConditionalFilter extends Component {
     return (
       <div key={i}>
         {removeAtEnd ? conditionChain : remove}
-        {nbspBetweenElements && '\u00A0'}
+        {this.props.nbspBetweenElements && '\u00A0'}
         {removeAtEnd ? remove : conditionChain}
       </div>
     )
