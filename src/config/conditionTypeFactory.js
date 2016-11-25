@@ -1,8 +1,8 @@
 import Condition from './Condition';
 
 export default function conditionTypeFactory(conditionClass = Condition) {
-  const generateCondition = (defaultLabel, callback) => ({ label = defaultLabel, ...rest }) => new conditionClass({
-    label, callback, ...rest
+  const generateCondition =(label, callback) => (options) => new conditionClass({
+    label, callback, ...options
   });
 
   return {
