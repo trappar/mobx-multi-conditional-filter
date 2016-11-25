@@ -28,7 +28,7 @@ export default class Condition extends BaseConfig {
     const processedValue = super.apply(value);
     const processedExpected = this.processExpected ? this.processExpected(expected) : expected;
 
-    return (expected || this.callOnEmptyExpected)
+    return (expected || this.callOnEmptyExpected || !this.render)
       ? this.callback && this.callback(processedValue, processedExpected)
       : true;
   }
